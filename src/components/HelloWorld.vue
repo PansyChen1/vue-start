@@ -1,42 +1,90 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
+
+    <!-- 声明式渲染 -->
+    <h2>{{ end }}</h2>
+
+    <span v-bind:title="time">鼠标悬停几秒</span>
+
+    <a :href="url">v-bind 指令缩写</a>
+
+    <button @click="consoleMessage">console message</button>
+    <button @click="consolee">consolee</button>
+
+    <p v-if="seen">enable see</p>
+    <p v-else>if else</p>
+
+    <!-- 条件与循环 -->
     <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
+      <li v-for="prop in todos" :key="prop.text">{{ prop.text }}</li>
     </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
+
+    <li v-for="n in evenNumbers" :key="n">{{n}}</li>
+
+    <ul class="info">
+      <li v-for="(value, name) in infoObject" :key="name">{{name}} - {{value}}</li>
     </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+
+    <!-- 处理用户输入 -->
+    <button v-on:click="reverseMessage">反转消息</button>
+
+    <p>{{input}}</p>
+    <input type="text" v-model="input" />
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
+  // data: function() {
+  //   return {
+  //     start: 'start'
+  //   }
+  // },
+  data() {
+    return {
+      end: "end",
+      time: "页面加载于",
+      seen: true,
+      todos: [
+        { text: "reading" },
+        { text: "learning vue.js" },
+        { text: "climbing" },
+      ],
+      infoObject: {
+        title: "How are you",
+        author: "Champion",
+        desctiption: "This is her life style"
+      },
+      numbers: [1, 3, 4, 8, 13, 14, 37],
+      input: "input",
+      url: "https://baidu.com"
+    };
+  },
+  methods: {
+    reverseMessage: function () {
+      this.end = this.end.split("").reverse().join("");
+    },
+    consoleMessage: function() {
+      console.log('v-on 缩写是@click')
+    },
+    consolee: function() {
+      console.log("console")
+    }
+  },
   props: {
-    msg: String
+    msg: String,
+  },
+  computed: {
+    evenNumbers: function() {
+      return this.numbers.filter(function(nums) {
+        return nums % 2 === 0;
+      })
+    }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -49,10 +97,14 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
+  /* display: inline-block; */
   margin: 0 10px;
 }
 a {
   color: #42b983;
+}
+.info {
+  float: left;
+  text-align: left;
 }
 </style>
