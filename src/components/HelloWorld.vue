@@ -32,10 +32,13 @@
     <p>{{input}}</p>
     <input type="text" v-model="input" />
 
+    <el-button>element button</el-button>
+
   </div>
 </template>
 
 <script>
+// import {Button} from 'element-ui'
 export default {
   name: "HelloWorld",
   // data: function() {
@@ -43,6 +46,9 @@ export default {
   //     start: 'start'
   //   }
   // },
+  props: {
+    msg: String,
+  },
   data() {
     return {
       end: "end",
@@ -63,6 +69,11 @@ export default {
       url: "https://baidu.com"
     };
   },
+
+  // 配置方法和计算属性之间的区别
+  // 1 使用上，配置方法需要去调用，计算属性使用时，是当成属性的；
+  // 2 计算属性会进行缓存，如果依赖不变，则直接使用缓存结果，不会重新计算；
+  // 3 计算属性可以当成属性赋值
   methods: {
     reverseMessage: function () {
       this.end = this.end.split("").reverse().join("");
@@ -73,9 +84,6 @@ export default {
     consolee: function() {
       console.log("console")
     }
-  },
-  props: {
-    msg: String,
   },
   computed: {
     evenNumbers: function() {
