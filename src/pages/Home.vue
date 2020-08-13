@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Banner :bannerArr="bannerArr" :duration="1000" />
+    <Banner :bannerArr="bannerArr" :duration="2000" />
 
     <!-- 监听消息 -->
     <NewsChannels @changeChannelId="handleChange" />
